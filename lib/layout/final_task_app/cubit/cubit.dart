@@ -191,14 +191,19 @@ class FinalTaskCubit extends Cubit<TaskStates> {
   }    
 
   void deletemaintenance(var value, var maintenanceId, BuildContext context) {
-    //emit(TaskDeleteUserLoadingState());
+    emit(TaskDeleteUserLoadingState());
     FirebaseFirestore.instance
     .collection(Users)
     .doc(currentDeviceId)
     .collection('Mintenance history')
     .doc(maintenanceId)
-    .delete();
-    maintenanceId.remove(value);
-    emit(maintanenceDeleteSuccessState());
+    .delete().then((valuee) {
+      maintenanceId.remove(value);
+      emit(maintanenceDeleteSuccessState());
+
+    });
+    // maintenanceId.remove(value);
+    // print("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv");
+    // emit(maintanenceDeleteSuccessState());
   }
 }
