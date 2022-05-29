@@ -75,3 +75,39 @@ class UsersModel{
     };
   }
 }
+
+
+class MaintenanceModel {
+  late String MaintenanceTyp;
+  late String startMaintenanceDate;
+  late String EndMaintenanceDate;
+  late String id;
+  late String worker;
+  late String Note;
+  MaintenanceModel({
+    this.MaintenanceTyp ='',
+    this.startMaintenanceDate = '',
+    this.EndMaintenanceDate ='',
+    this.id = '',
+    this.worker = '',
+    this.Note = '',
+  });
+  MaintenanceModel.fromJson(Map<String, dynamic>? json){
+    MaintenanceTyp = json!['MaintenanceTyp'];
+    startMaintenanceDate = json['startMaintenanceDate'];
+    EndMaintenanceDate = json['EndMaintenanceDate'];
+    id = json['id'];
+    worker = json['worker'];
+    Note = json['Note'];
+  }
+  Map<String,dynamic> toMap(){
+    return {
+      'MaintenanceTyp' : MaintenanceTyp,
+      'startMaintenanceDate' : startMaintenanceDate,
+      'EndMaintenanceDate': EndMaintenanceDate,
+      'id' : id,
+      'worker' : worker,
+      'Note': Note,
+    };
+  }
+}

@@ -7,3 +7,5 @@ String token ='';
 var uId = '';
 
 String Users = "TaskUsers";
+
+var currentDeviceId = '';

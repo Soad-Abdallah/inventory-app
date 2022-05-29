@@ -16,12 +16,14 @@ import 'package:fristapp/shared/styles/icon_broken.dart';
 Widget defulteButton({
   background = Colors.blue,
   width = double.infinity,
+  double? height,
   bool isUpperCase = true,
   double radius = 20.0,
   required Function function,
   required String text,
 }) =>
     Container(
+      height: height,
       width: width,
       decoration: BoxDecoration(
         color: background,
@@ -57,6 +59,7 @@ Widget defultFormField({
   VoidCallback? onPressed,
 }) =>
     TextFormField(
+      
       controller: controller,
       keyboardType: type,
       obscureText: obsCuretext,
@@ -65,6 +68,7 @@ Widget defultFormField({
       onChanged: onChange,
       validator: validate,
       enabled: isCleckable,
+      maxLines: null,
       decoration: InputDecoration(
         hintText: lable,
         labelText: lable,

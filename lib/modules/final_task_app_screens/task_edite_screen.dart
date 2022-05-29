@@ -4,7 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fristapp/layout/final_task_app/cubit/cubit.dart';
 import 'package:fristapp/layout/final_task_app/cubit/states.dart';
 import 'package:fristapp/model/final_task/Task_user_model.dart';
+import 'package:fristapp/modules/final_task_app_screens/maintenance_history_screen.dart';
 import 'package:fristapp/shared/component/component.dart';
+import 'package:fristapp/shared/component/constants.dart';
 import 'package:fristapp/shared/styles/icon_broken.dart';
 import 'package:intl/intl.dart';
 
@@ -74,7 +76,6 @@ class TaskEditeUserScraan extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-
                   Container(
                     height: 190.0,
                     child: Stack(
@@ -306,6 +307,16 @@ class TaskEditeUserScraan extends StatelessWidget {
                         SizedBox(
                           height: 10.0,
                         ),
+                        defulteButton(
+                          function: (){
+                            currentDeviceId = FinalTaskCubit.get(context).UsersList[index]['id'];
+                            FinalTaskCubit.get(context).maintanenceList=[];
+                            FinalTaskCubit.get(context).getAllmaintanenceHistory();
+                            NavigetTo(context,maintenanceScreen());
+                            print(currentDeviceId);
+
+                          },
+                          text: 'show maintenance history')
                     // ConditionalBuilder(
                     //   condition: State is! TaskAddUserLoadingState, 
                     //   builder: (context)=> defulteButton(

@@ -132,4 +132,73 @@ class FinalTaskCubit extends Cubit<TaskStates> {
     UsersList.remove(value);
     emit(TaskDeleteUserSuccessState());
   }
+
+
+  void MaintenanceAdd(
+      {required String MaintenanceTyp,
+      required String startMaintenanceDate,
+      required String EndMaintenanceDate,
+      required String worker,
+      required String Note
+      }) {
+    MaintenanceModel model = MaintenanceModel(
+      MaintenanceTyp: MaintenanceTyp,
+      startMaintenanceDate: startMaintenanceDate,
+      Note: Note,
+      EndMaintenanceDate: EndMaintenanceDate,
+      worker: worker,
+      id: '',
+    );
+    FirebaseFirestore.instance
+        .collection(Users)
+        .doc(currentDeviceId)
+        .collection('Mintenance history')
+        .add(model.toMap())
+        .then((value) {
+      model.id = value.id.toString();
+      print(model.id);
+      FirebaseFirestore.instance
+      .collection(Users)
+      .doc(currentDeviceId)
+      .collection('Mintenance history')
+      .doc("${model.id}").update({
+        'id': model.id,
+      });
+      UsersList.add(model.toMap());
+      emit(maintanenceAddSuccessState());
+    }).catchError((Error) {
+      emit(maintanenceAddErrorsState(Error.toString()));
+    });
+  }
+
+  late List<Map> maintanenceList = [];
+  void getAllmaintanenceHistory() {
+    emit(TaskGetUserLoadingState());
+    FirebaseFirestore.instance
+    .collection(Users)
+    .doc(currentDeviceId)
+    .collection('Mintenance history')
+    .get().then((value) {
+      value.docs.forEach((element) {
+        maintanenceList.add(element.data());
+      });
+      print(maintanenceList);
+      emit(GetAllMaintenanceHistorySuccessState());
+    }).catchError((error) {
+      print(error.toString());
+      emit(GetAllMaintenanceHistoryErrorState(error));
+    });
+  }    
+
+  void deletemaintenance(var value, var maintenanceId, BuildContext context) {
+    //emit(TaskDeleteUserLoadingState());
+    FirebaseFirestore.instance
+    .collection(Users)
+    .doc(currentDeviceId)
+    .collection('Mintenance history')
+    .doc(maintenanceId)
+    .delete();
+    maintenanceId.remove(value);
+    emit(maintanenceDeleteSuccessState());
+  }
 }
